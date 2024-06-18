@@ -14,7 +14,13 @@ $(document).ready(function(){
                 gnbli +=`<li>${ele["category"]}`;
                 gnbli +=`<ul>`;
                 ele["subcategories"].forEach(function(eele, iidx){
-                    gnbli +=`<li>${eele["name"]}</li>`;
+                    gnbli +=`<li>${eele["name"]}`;
+                    gnbli +=`<ul>`;
+                    eele["items"].forEach(function(eeele, iiidx){
+                        gnbli +=`<li>${eeele}</li>`;
+                    })
+                    gnbli +=`</ul>`;
+                    gnbli +=`</li>`;
                 })
                 gnbli +=`</ul>`;
                 gnbli +=`</li>`
