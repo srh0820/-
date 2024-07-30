@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Open API 데이터 연동</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Open API 데이터 연동 예제</h1>
+    <button id="fetchButton" onclick="ajaxfun()">데이터 가져오기</button>
+    <div id="result"></div>
+
+    <script src="script.js"></script>
+<script>
+    function ajaxfun() { // 데이터 가져오기
+        $.ajax({ // 제이쿼리 비동기함수 ajax
+            url: 'https://jsonplaceholder.typicode.com/posts',
+            method: 'GET', // open GET
+            dataType: 'json',
+            success: function(data) { // axios 다른 점 - 응답객체의 data 키워드 안에 data 데이터저장
+                console.log(data, Array.isArray(data));
+                displayData(data);
+            },
+            error: function(error) {
+                console.error('Error:', error);
+            }
+        })
+    };
+
+    function displayData(data) { // 가져온 데이터 화면에 출력하기
+        var resultDiv = document.querySelector('#result');
+        resultDiv.innerHTML = '';  // 기존 내용을 지웁니다.
+        // 메서드 값이 들어있는 것과 없는 것 구분하기 (없으면 데이터 가져옴)
+        // 제이쿼리 선택자는 제이쿼리메서드와 연동
+
+        // const mynm = $('[name=wr_name]').val();
+        // name 이 wr_name 인 객체 mynm 에 저장
+
+        data.forEach(function(item) {
+            var div = 
+                `<div class='post'>
+                <h2>${item.title}</h2>
+                <p>${item.body}</p></div>`;
+            resultDiv.innerHTML += div;
+        });
+    }
+</script>
+</body>
+</html>
