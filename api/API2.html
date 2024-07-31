@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Open API 데이터 연동 예제</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Open API 데이터 연동 예제</h1>
+    <button id="fetchButton" onclick="ajaxfun()">트리거</button>
+    <div id="result"></div>
+
+    <script>
+   
+        function ajaxfun() {
+            $.ajax({
+                url: 'https://apis.data.go.kr/5050000/eatHtpService/getEatHtp',
+                method: 'GET',
+                data: {
+                    serviceKey: '7Q32au76h6ev6rGWR+BciS9A5qLExMfeljnKCYCRtr5alemU+E8p6KKDrGtltMhYdee4AsrZNZunEBLi2havng==',
+                    pageNo: 1,
+                    numOfRows: 10
+                },
+                dataType: 'json',
+                success: function(resdata) {
+                    console.log(resdata.response.body.items, Array.isArray(resdata.response.body.items.item));
+                    const mydata = resdata.response.body.items.item;
+                    let resulttag = '';
+                    for(x in mydata){
+                        resulttag +=`<div>${mydata[x].AREA_NAME}</div>` 
+                    }
+                    $("#result").html(resulttag);                   
+                },
+                error: function(error) {
+                    console.error('Error:', error);
+                    $('#result').text('데이터를 가져오는 중 오류가 발생했습니다.');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
